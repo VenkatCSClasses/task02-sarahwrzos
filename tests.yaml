@@ -1,0 +1,161 @@
+tests:
+
+  - name: get balance basic
+    input:
+      create_account:
+        email: a@b.com
+        balance: 200
+      operations:
+        - getBalance
+    output:
+      result: 200
+
+  - name: withdraw valid
+    input:
+      create_account:
+        email: a@b.com
+        balance: 200
+      operations:
+        - withdraw: 100
+        - getBalance
+    output:
+      result: 100
+
+  - name: withdraw too much
+    input:
+      create_account:
+        email: a@b.com
+        balance: 200
+      operations:
+        - withdraw: 300
+    output:
+      exception: InsufficientFundsException
+
+  - name: withdraw negative
+    input:
+      create_account:
+        email: a@b.com
+        balance: 200
+      operations:
+        - withdraw: -100
+    output:
+      exception: IllegalArgumentException
+
+  - name: withdraw too many decimals
+    input:
+      create_account:
+        email: a@b.com
+        balance: 200
+      operations:
+        - withdraw: 100.111
+    output:
+      exception: IllegalArgumentException
+
+  - name: deposit valid
+    input:
+      create_account:
+        email: a@b.com
+        balance: 200
+      operations:
+        - deposit: 50
+        - getBalance
+    output:
+      result: 250
+
+  - name: deposit invalid
+    input:
+      create_account:
+        email: a@b.com
+        balance: 200
+      operations:
+        - deposit: -100
+    output:
+      exception: IllegalArgumentException
+
+  - name: constructor invalid email
+    input:
+      create_account:
+        email: ""
+        balance: 100
+    output:
+      exception: IllegalArgumentException
+
+  - name: constructor invalid balance
+    input:
+      create_account:
+        email: a@b.com
+        balance: -100
+    output:
+      exception: IllegalArgumentException
+
+  - name: isAmountValid true
+    input:
+      call_static:
+        method: isAmountValid
+        value: 100.11
+    output:
+      result: true
+
+  - name: isAmountValid false
+    input:
+      call_static:
+        method: isAmountValid
+        value: 100.111
+    output:
+      result: false
+
+  - name: isEmailValid true
+    input:
+      call_static:
+        method: isEmailValid
+        value: abc.def@mail.com
+    output:
+      result: true
+
+  - name: isEmailValid false
+    input:
+      call_static:
+        method: isEmailValid
+        value: abc..def@mail.com
+    output:
+      result: false
+
+  - name: transfer valid
+    input:
+      create_accounts:
+        - id: acc1
+          email: a@b.com
+          balance: 300
+        - id: acc2
+          email: a@b.com
+          balance: 100
+      operations:
+        - transfer:
+            from: acc1
+            to: acc2
+            amount: 50
+        - getBalance:
+            account: acc1
+        - getBalance:
+            account: acc2
+    output:
+      result:
+        acc1: 250
+        acc2: 150
+
+  - name: transfer too much
+    input:
+      create_accounts:
+        - id: acc1
+          email: a@b.com
+          balance: 300
+        - id: acc2
+          email: a@b.com
+          balance: 100
+      operations:
+        - transfer:
+            from: acc1
+            to: acc2
+            amount: 300
+    output:
+      exception: IllegalArgumentException
