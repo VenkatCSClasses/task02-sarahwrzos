@@ -1,25 +1,55 @@
 You are a coding agent.
 
-Using SPEC.md as the behavior specification and tests.yaml as the test cases:
+Using SPEC.md as the complete behavioral specification and tests.yaml as the required test definitions, perform the following tasks:
 
-1. Implement the BankAccount library in Java 17.
-2. Generate the following files **separately**, exactly as named:
-   - BankAccount.java — contains the class implementation
-   - BankAccountTest.java — contains JUnit 5 tests that fully cover all test cases from tests.yaml
-   - README.md — describes usage, installation, and testing
-3. Do not invent extra behavior; follow SPEC.md exactly.
-4. For each file, start with a clear header, e.g.:
+Implement the BankAccount library in Java 17, strictly following SPEC.md.
+
+Generate the following files separately, exactly as named:
+
+BankAccount.java — the full class implementation
+
+BankAccountTest.java — JUnit 5 tests that fully cover all cases from tests.yaml
+
+README.md — includes setup, installation, compilation, and testing instructions
+
+Do not introduce any behavior that is not explicitly defined in SPEC.md.
+
+For each file, begin with a clear header in this exact format:
 
 --- BankAccount.java ---
 <file contents>
 
-5. Ensure all tests from tests.yaml pass when compiled and run.
-6. The test file must cover:
-   - valid account creation
-   - invalid email rejection
-   - invalid starting balance rejection
-   - deposits (valid and invalid)
-   - withdrawals (valid, invalid, insufficient funds)
-   - transfers (valid, invalid, atomic behavior)
-   - validation method behavior
-7. Do not combine multiple files into one output block.
+
+Ensure:
+
+All tests in tests.yaml are implemented.
+
+All tests pass when compiled and run with Java 17.
+
+The project follows the Maven + JUnit 5 setup described in SPEC.md.
+
+Test files are structured under src/test/java.
+
+Implementation files are structured under src/main/java.
+
+The test suite must explicitly cover:
+
+Valid account creation
+
+Invalid email rejection
+
+Invalid starting balance rejection
+
+Deposits (valid and invalid)
+
+Withdrawals (valid, invalid, insufficient funds)
+
+Transfers (valid, invalid, atomic behavior)
+
+Validation method behavior
+
+Do not combine multiple files into a single output block.
+
+Do not skip or ignore the project setup requirements described in SPEC.md.
+
+Only produce the three required files, properly separated by headers. No additional commentary.
