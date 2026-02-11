@@ -105,193 +105,193 @@ public class BankAccountTest {
 
 Design Principles
 
-Explicit state only (email + numeric balance)
+    Explicit state only (email + numeric balance)
 
-Fail fast (invalid inputs throw errors)
+    Fail fast (invalid inputs throw errors)
 
-No hidden behavior (no interest, no fees)
+    No hidden behavior (no interest, no fees)
 
-Deterministic (no randomness, I/O, or time-based logic)
+    Deterministic (no randomness, I/O, or time-based logic)
 
-Two-decimal monetary rule (≥ 0 and at most two decimal places)
+    Two-decimal monetary rule (≥ 0 and at most two decimal places)
 
 Type Conventions
-Spec Type	Meaning	Example
-number	Finite numeric value	0, 12.50, 100
-string	UTF-8 text	"user@example.com"
-account	BankAccount instance	acctA
-error	Language-idiomatic error	Exception
-Validation Rules
-Monetary Amount
+    Spec Type	Meaning	Example
+    number	Finite numeric value	0, 12.50, 100
+    string	UTF-8 text	"user@example.com"
+    account	BankAccount instance	acctA
+    error	Language-idiomatic error	Exception
+    Validation Rules
+    Monetary Amount
 
 An amount is valid if:
 
-Value ≥ 0
+    Value ≥ 0
 
-Has at most two decimal places
+    Has at most two decimal places
 
-Is finite
+    Is finite
 
-Email Identifier
+    Email Identifier
 
 An email is valid if:
 
-Not null
+    Not null
 
-Not empty after trimming
+    Not empty after trimming
 
-Contains exactly one @
+    Contains exactly one @
 
-Local part
+    Local part
 
-Only alphanumeric characters and ._%+-
+    Only alphanumeric characters and ._%+-
 
-Does not start or end with . or -
+    Does not start or end with . or -
 
-No consecutive dots
+    No consecutive dots
 
-Domain
+    Domain
 
-Contains at least one .
+    Contains at least one .
 
-Labels non-empty
+    Labels non-empty
 
-Labels do not start or end with -
+    Labels do not start or end with -
 
-Final label
+    Final label
 
-Length ≥ 2
+    Length ≥ 2
 
-Letters only
+    Letters only
 
 Construction
-createAccount(email, startingBalance?) → account
+    createAccount(email, startingBalance?) → account
 
 Arguments:
 
-email (string)
+    email (string)
 
-startingBalance (number, optional, default = 0)
+    startingBalance (number, optional, default = 0)
 
 Errors:
 
-Invalid email
+    Invalid email
 
-Invalid starting balance
+    Invalid starting balance
 
 Operations
-getBalance(account) → number
+    getBalance(account) → number
 
-Returns current balance.
+    Returns current balance.
 
-getEmail(account) → string
+    getEmail(account) → string
 
-Returns account email identifier.
+    Returns account email identifier.
 
-deposit(account, amount) → void
+    deposit(account, amount) → void
 
 Errors:
 
-Invalid amount
+    Invalid amount
 
-withdraw(account, amount) → void | error
+    withdraw(account, amount) → void | error
 
 Behavior:
 
-If amount ≤ balance → subtract
+    If amount ≤ balance → subtract
 
-If amount > balance → error
+    If amount > balance → error
 
 Errors:
 
-Invalid amount
+    Invalid amount
 
-Insufficient funds
+    Insufficient funds
 
-transfer(fromAccount, amount, toAccount) → void | error
+    transfer(fromAccount, amount, toAccount) → void | error
 
 Behavior:
 
-If:
+    If:
 
-Amount valid
+        Amount valid
 
-Amount ≤ fromAccount.balance
+        Amount ≤ fromAccount.balance
 
-Then:
+    Then:
 
-Subtract from fromAccount
+        Subtract from fromAccount
 
-Add to toAccount
+        Add to toAccount
 
-Errors:
+    Errors:
 
-Invalid amount
+        Invalid amount
 
-Insufficient funds
+        Insufficient funds
 
-Transfers must be atomic — if the operation fails, neither account changes.
+        Transfers must be atomic — if the operation fails, neither account changes.
 
-Invariants
+    Invariants
 
-After construction and every successful operation:
+        After construction and every successful operation:
 
-Balance ≥ 0
+        Balance ≥ 0
 
-Email valid
+        Email valid
 
-Balance has at most two decimal places
+        Balance has at most two decimal places
 
-Failed operations must not modify state.
+        Failed operations must not modify state.
 
 Testing Requirements
 
-Tests must verify:
+    Tests must verify:
 
-Valid account creation
+        Valid account creation
 
-Invalid email rejected
+        Invalid email rejected
 
-Invalid starting balance rejected
+        Invalid starting balance rejected
 
-Deposit increases balance
+        Deposit increases balance
 
-Invalid deposit rejected without state change
+        Invalid deposit rejected without state change
 
-Withdraw reduces balance
+        Withdraw reduces balance
 
-Withdraw exceeding balance fails
+        Withdraw exceeding balance fails
 
-Transfer updates both accounts correctly
+        Transfer updates both accounts correctly
 
-Transfer exceeding balance fails atomically
+        Transfer exceeding balance fails atomically
 
-Validation methods behave correctly
+        Validation methods behave correctly
 
-All tests must be placed in:
+    All tests must be placed in:
 
-src/test/java
+        src/test/java
 
 Non-Goals
 
-This specification excludes:
+    This specification excludes:
 
-Interest
+        Interest
 
-Overdraft protection
+        Overdraft protection
 
-Currency formatting
+        Currency formatting
 
-Persistence
+        Persistence
 
-Concurrency
+        Concurrency
 
-Transaction history
+        Transaction history
 
-Real-world banking logic
+        Real-world banking logic
 
 Version History
 
-v0.1.0 — Initial specification
+    v0.1.0 — Initial specification
 
-v0.1.1 — Added Maven + JUnit 5 setup requirements
+    v0.1.1 — Added Maven + JUnit 5 setup requirements

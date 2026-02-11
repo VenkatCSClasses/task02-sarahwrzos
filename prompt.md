@@ -34,19 +34,19 @@ Implementation files are structured under src/main/java.
 
 The test suite must explicitly cover:
 
-Valid account creation
+    Valid account creation
 
-Invalid email rejection
+    Invalid email rejection
 
-Invalid starting balance rejection
+    Invalid starting balance rejection
 
-Deposits (valid and invalid)
+    Deposits (valid and invalid)
 
-Withdrawals (valid, invalid, insufficient funds)
+    Withdrawals (valid, invalid, insufficient funds)
 
-Transfers (valid, invalid, atomic behavior)
+    Transfers (valid, invalid, atomic behavior)
 
-Validation method behavior
+    Validation method behavior
 
 Do not combine multiple files into a single output block.
 
